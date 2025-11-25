@@ -1,0 +1,16 @@
+# macOS Finder and system files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# Resource forks and extended attributes
+._*
+
+# Spotlight, Trash, and system directories
+.Spotlight-V100
+.Trashes
+.DocumentRevisions-V100
+.fseventsd
+.VolumeIcon.icns
+.apdisk
