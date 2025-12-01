@@ -42,9 +42,6 @@ browser.storage.onChanged.addListener((changes, area) => {
 
 function isTargetUser() {
   // Check various places where the email might appear
-
-  // 1. Common Azure/Intune header elements
-  // Often the email is in the title attribute of the avatar or username
   const potentialElements = document.querySelectorAll(
     '.fxs-avatarmenu-username, .fxs-user-name, .fxs-avatarmenu-tenant-image, .fxs-user-image, .ms-Persona-secondaryText, [title*="@"]'
   );
@@ -54,14 +51,6 @@ function isTargetUser() {
       return true;
     }
   }
-
-  // 2. Check page title (sometimes contains user info, though rare)
-
-  // 3. Deep search in specific containers if needed (e.g. the MeControl)
-  // This is a bit expensive so we rely on specific selectors first.
-
-  // If we can't find the email, we might be in a state where it's not loaded yet.
-  // But we should be conservative: if we don't see the email, don't replace.
   return false;
 }
 
@@ -73,8 +62,6 @@ function replaceIdentity() {
 
   // Azure Portal & Intune often share similar structures but can vary.
   // Common selectors for the user menu button in the top right.
-
-  // Strategy 1: Look for the specific button structure in Azure/Intune
   // The user button usually has a class like 'fxs-avatarmenu-username' or is inside a button with specific aria-labels.
 
   // Azure Portal / Intune (React-based)
@@ -117,13 +104,7 @@ function replaceIdentity() {
   const fluentPersonaTexts = document.querySelectorAll('.ms-Persona-primaryText, .ms-Persona-secondaryText');
   fluentPersonaTexts.forEach(el => {
     if (el.textContent && el.textContent.includes('@') || el.textContent.includes(' ')) {
-      // Simple heuristic: if it looks like a name or email, replace it.
-      // This is risky, might replace too much. Let's be more specific if possible.
-      // For now, let's just target the top bar if we can find it.
-      // But only if we are sure it's not the target email we are replacing (though we checked isTargetUser globally)
-      // Actually, we want to replace the NAME, not the email.
-      // If this element is the email, maybe we leave it or replace it with a fake email?
-      // Let's stick to replacing the Name if it matches the pattern of a name.
+      // TODO: Consider simple heuristic, if it looks like a name or email, replace it.
     }
   });
 }
