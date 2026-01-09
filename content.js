@@ -1,3 +1,7 @@
+if (typeof browser === "undefined") {
+  var browser = chrome;
+}
+
 // Configuration
 let config = {
   displayName: "Demo User",

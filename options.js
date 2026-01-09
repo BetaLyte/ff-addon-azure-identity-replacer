@@ -1,3 +1,7 @@
+if (typeof browser === "undefined") {
+    var browser = chrome;
+}
+
 function saveOptions(e) {
     e.preventDefault();
 
